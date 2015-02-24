@@ -1,0 +1,4 @@
+<p><%= comment.body %> <i>by</i> <%= comment.commenter %></p>
+<%= link_to 'delete', article_comment_path(@article, comment),
+            method: :delete,
+            data: { confirm: 'Are you sure?'} %>
