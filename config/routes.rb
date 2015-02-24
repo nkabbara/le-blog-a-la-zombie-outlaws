@@ -1,8 +1,31 @@
 Rails.application.routes.draw do
+  # Zombie Outlaws Lesson One
+  # I'm commenting the resource below which will basically force me to unpack the routes one by one.
 
-  resources :articles do
-    resources :comments
-  end
+  #resources :articles do
+    #resources :comments
+  #end
 
   root 'welcome#index'
+
+  # Watch rails blow up for using match! XSS no mo'!
+  #match 'articles', to: 'acticles#index'
+  
+
+  # We should use verbs instead or via: (verb)
+  get 'articles', to: 'articles#index'
+
+  # When we put "as: 'xxx_article'", url helpers are created to map to that route. Otherwise, rails will have to deduce them from the url pattern which doesn't make sense for some patterns.
+  get 'articles/new', to: 'articles#new', as: 'new_article'
+  get 'articles/:id', to: 'articles#show', as: 'article'
+  get 'articles/:id/edit', to: 'articles#edit', as: 'edit_article'
+  patch 'articles/:id', to: 'articles#update'
+  delete 'articles/:id', to: 'articles#destroy'
+  post 'articles', to: 'articles#create'
+  
+  # This doesn't work here because routes are prioritized based on precendent. Rails will think that new is :id. Put it on top of its corresponding routes.
+  #get 'articles/new', to: 'articles#new', as: 'new_article'
+
+  post 'articles/:article_id/comments', to: 'comments#create', as: 'article_comments'
+  delete 'articles/:article_id/comments/:id', to: 'comments#destroy', as: 'article_comment'
 end
