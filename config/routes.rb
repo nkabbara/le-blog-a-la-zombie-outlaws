@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   #end
 
   get 'articles/todays', to: 'articles#todays', as: :todays_articles
+  get 'articles/with_comments_by/:id', to: 'articles#by', as: :articles_with_comments_by
   concern :commentable, Commentable
   #resources :articles, concerns: :commentable
   resources :articles do
@@ -19,7 +20,7 @@ Rails.application.routes.draw do
   resource :about_me , concerns: :commentable
 
 
-  root 'welcome#index'
+  root 'welcome#index', as: 'home'
 
   # Watch rails blow up for using match! XSS no mo'!
   #match 'articles', to: 'acticles#index'

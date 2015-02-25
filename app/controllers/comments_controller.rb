@@ -1,6 +1,6 @@
 class CommentsController < ApplicationController
   #http_basic_authenticate_with name: 'nash', password: 'mypass123', only: :destroy
-
+  
   def create
     article = params[:article_id] ? Article.find(params[:article_id]) : AboutMe.first
     article.comments.create(comment_params)

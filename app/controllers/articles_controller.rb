@@ -1,6 +1,10 @@
 class ArticlesController < ApplicationController
   #http_basic_authenticate_with name: 'nash', password: 'mypass123', except: [:index, :show]
 
+  def by
+    @articles = Article.includes(:comments).where("comments.commenter = ?", params[:id]).references("comments")
+  end
+
   def todays
     @articles = Article.todays
   end
