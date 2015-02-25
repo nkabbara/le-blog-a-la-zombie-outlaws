@@ -11,7 +11,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150221052643) do
+ActiveRecord::Schema.define(version: 20150225191153) do
+
+  create_table "about_mes", force: :cascade do |t|
+    t.string "title"
+    t.text   "text"
+  end
 
   create_table "articles", force: :cascade do |t|
     t.string   "title"
@@ -23,11 +28,12 @@ ActiveRecord::Schema.define(version: 20150221052643) do
   create_table "comments", force: :cascade do |t|
     t.string   "commenter"
     t.text     "body"
-    t.integer  "article_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+    t.integer  "commentable_id"
+    t.string   "commentable_type"
   end
 
-  add_index "comments", ["article_id"], name: "index_comments_on_article_id"
+  add_index "comments", ["commentable_type", "commentable_id"], name: "index_comments_on_commentable_type_and_commentable_id"
 
 end

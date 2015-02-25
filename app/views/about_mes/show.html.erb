@@ -1,0 +1,7 @@
+<h1><%= @about_me.title %></h1>
+<p><%= @about_me.text %></p>
+<h2>Comments</h2>
+<%= render @about_me.comments %>
+<%= render 'comments/form' %>
+<br>
+<%= link_to 'Home Page', controller: 'welcome' %>
