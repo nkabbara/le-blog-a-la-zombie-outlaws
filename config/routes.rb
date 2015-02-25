@@ -7,11 +7,13 @@ Rails.application.routes.draw do
     #resources :comments
   #end
 
+  get 'articles/todays', to: 'articles#todays', as: :todays_articles
   concern :commentable, Commentable
   #resources :articles, concerns: :commentable
   resources :articles do
     concerns :commentable, only: [:create, :destroy]
   end
+
 
   # Remember, a singular resource doesn't have #index. Calling link_to "Bla bla", controller: 'about_me' will err out. Also note, that controller is AboutMes (plural) because rails is optimizing for cases where you'd want to map plural resources.
   resource :about_me , concerns: :commentable
