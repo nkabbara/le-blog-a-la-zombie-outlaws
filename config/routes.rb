@@ -9,6 +9,7 @@ Rails.application.routes.draw do
 
   get 'articles/todays', to: 'articles#todays', as: :todays_articles
   get 'articles/with_comments_by/:id', to: 'articles#by', as: :articles_with_comments_by
+  get 'articles/with_title', to: 'articles#with_title', as: :articles_with_title
   concern :commentable, Commentable
   #resources :articles, concerns: :commentable
   resources :articles do
