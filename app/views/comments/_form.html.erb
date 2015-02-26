@@ -8,5 +8,16 @@
     <%= f.label :body %><br>
     <%= f.text_area :body %>
   </p>
+
+  <br>
+  <!-- The first two arguments are to decide which item is to be selected. This won't work here because we'd have to be looking
+  at many articles and selecting comments to which they belong. -->
+<%= collection_select(:comment, :commentable_id, @article.comments, :id, :commenter ) %>
+<br>
+  <!--
+ collection_radio_buttons(:comment, :commentable_id, @article.comments, :id, :commenter ) 
+<br>
+ collection_check_boxes(:comment, :commentable_id, @article.comments, :id, :commenter ) 
+ -->
   <%= f.submit %>
 <% end %>
