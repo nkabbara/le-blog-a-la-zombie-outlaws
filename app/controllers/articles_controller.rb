@@ -55,6 +55,8 @@ class ArticlesController < ApplicationController
 
   private
   def article_params
+    # When we submit a form with the commented line below, Rails will log Unpermitted parameter.
+    #params.require(:article).permit(:title)
     params.require(:article).permit(:title, :text)
   end
 end
