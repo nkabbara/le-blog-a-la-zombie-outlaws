@@ -1,5 +1,7 @@
 class ArticlesController < ApplicationController
   #http_basic_authenticate_with name: 'nash', password: 'mypass123', except: [:index, :show]
+  # Muwahahahaha no etags for you! Unless you refresh in under one sec
+  etag { Time.now }
 
   def with_title
     @articles = Article.where.not(title: '')
@@ -36,6 +38,7 @@ class ArticlesController < ApplicationController
 
   def index
     @articles = Article.all
+    fresh_when(@articles.last)
   end
 
   def edit
