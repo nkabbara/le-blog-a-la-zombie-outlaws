@@ -44,3 +44,5 @@ group :development, :test do
 end
 
 gem 'dalli'
+gem 'puma'
+gem 'redis'

@@ -1,4 +1,5 @@
 class ArticlesController < ApplicationController
+  include ActionController::Live
   #http_basic_authenticate_with name: 'nash', password: 'mypass123', except: [:index, :show]
   # Muwahahahaha no etags for you! Unless you refresh in under one sec
   etag { Time.now }
@@ -34,6 +35,24 @@ class ArticlesController < ApplicationController
       format.html
       format.json
     end
+  end
+
+  def stream
+    response.headers['Content-Type'] = 'text/event-stream'
+    redis = Redis.new
+    redis.subscribe('mychannel') do |on|
+      on.message do |event, data|
+        response.stream.write("event: message\n")
+        response.stream.write("data: #{data}\n\n")
+      end
+    end
+    render nothing: true
+    
+  rescue IOError
+    logger.info "Stream closed"
+  ensure
+    redis.quit
+    response.stream.close 
   end
 
   def index
