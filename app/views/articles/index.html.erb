@@ -1,6 +1,5 @@
 <h1>Listing Articles</h1>
-<p id="test"></p>
-<table>
+<table id="articles">
   <tr>
     <th>Title<th>
     <th>Text<th>
@@ -28,7 +27,8 @@
   $(document).ready(function(){
       var source = new EventSource('/articles/stream');
       source.addEventListener('message', function(e) {
-        alert('It works!');
+        console.log(e.data);
+        $("#articles").append("<tr><td>" + JSON.parse(e.data).title +  "</td><td>" + JSON.parse(e.data).text + "</td></tr>");
       });
   });
 </script>

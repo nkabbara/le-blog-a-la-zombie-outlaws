@@ -2,7 +2,7 @@ class ArticlesController < ApplicationController
   include ActionController::Live
   #http_basic_authenticate_with name: 'nash', password: 'mypass123', except: [:index, :show]
   # Muwahahahaha no etags for you! Unless you refresh in under one sec
-  etag { Time.now }
+  #etag { Time.now }
 
   def with_title
     @articles = Article.where.not(title: '')
@@ -23,6 +23,8 @@ class ArticlesController < ApplicationController
   def create
     @article = Article.new(article_params)
     if @article.save
+      redis = Redis.new
+      redis.publish 'mychannel', { title: @article.title, text: @article.text }.to_json
       redirect_to @article
     else
       render 'new'
@@ -57,7 +59,7 @@ class ArticlesController < ApplicationController
 
   def index
     @articles = Article.all
-    fresh_when(@articles.last)
+    fresh_when(1)
   end
 
   def edit
